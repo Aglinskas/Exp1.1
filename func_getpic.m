@@ -13,7 +13,7 @@ num_people = length(C{1,1});
 % strcat(lastnames, {', '}, firstnames)
 
 % go in the 'selected' folder and figure out how many pics it has
-selected_name2 = strcat(stimuli, {'/'}, selected_name,{'/'}, 'selected' );
+selected_name2 = strcat(stimuli, {'/'}, selected_name,{'/'}, 'selected' ,{'/'},'*.jpg');
 B0 = selected_name2{1,1}; %strcat makes a cell, this takes the value from it
 B1 = dir(B0); % holds the contents of the directory
 % listDir(~[listDir.isdir]).name
@@ -27,7 +27,7 @@ num_files2 = size(B1);
 %fullpath = strcat(selected_name2,{'/'},B1(5).name)
 %picture = strcat(stimuli, {'/'}, selected_name)
 
-%%%%%%
+
 % selecting a random name
 num_pics = 0;
 while num_pics < 1
