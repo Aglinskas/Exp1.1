@@ -36,23 +36,23 @@ Task{3,2} = '1 = very attractive\n2 = attractive\n3 = average\n4 = not really at
 Task{4,1} = 'How friendly is this person?';
 Task{4,2} = '1 = very friendly\n2 = friendly\n3 = not really friendly\n4 = would not approach';
 Task{5,1} = 'How trustworthy is this person?';
-Task{5,2} = '1 = very\n2 = quite\n3 = not really\n4 = not at all';
+Task{5,2} = '1 = very trustworthy\n2 = quite trustworthy\n3 = not really trustworthy\n4 = not at all trustworthy';
 Task{6,1} = 'Do you associate this person more with positive or negative emotions?';
 Task{6,2} = '1 = Very postive emotions\n2 = somewhat positive emotions\n3 = somewhat negative emotions\n4 = negative emotions';
 Task{7,1} = 'Have you seen this person before'; % semantic access 1
 Task{7,2} = '1 = Yes, I have\n2 = No, never seen them before';
 Task{8,1} = 'If asked to write an essay about this person\nhow much could you write about them?';%semantic access 2
-Task{8,2} = '1 = None\n2 = Sentence\n3 = Paragraph\n4 = Page';
+Task{8,2} = '1 = Page\n2 = Paragraph\n3 = Sentence\n4 = none';
 Task{9,1} = 'How common is this persons name?'
-Task{9,2} = '1 = Very common\n2 = Not very common\n3 = First time hearing this name\n4 = I dont know this persons name'
+Task{9,2} = '1 = Very common\n2 = Not very common\n3 = They are the only person I know with that name\n4 = I dont know this persons name'
 Task{10,1} = 'How many facts can you remember about this person'
-Task{10,2} = '1 = Five or more\n2 = Two or three\n3 = Just their name\n4 = Dont know the person'
+Task{10,2} = '1 = more than 5 as well as their name\n2 = Four or Five\n3 = Two or three\n4 = Dont know the person'
 Task{11,1} = 'Who is this person?'
 Task{11,2} = '1 = TV/Movie persona\n2 = Singer/Musician\n3 = Politian/Businessman\n4 = other/dont know'
 Task{12,1} = 'How distinct / distinguishable is this persons face to you?'
-Task{12,2} = '1 = Would not confuse it with anyone else\n2 = Quite distinct\n3 = Confusable\n4 = Would easily confuse'
+Task{12,2} = '1 = Would not confuse it with anyone else\n2 = Quite distinct\n3 = Confusable\n4 = Would easily confuse with someone else'
 Task{13,1} = 'Consider all the information available to you;\nAre they a good person?'
-Task{13,2} = '1 = This is a good person\n 2 = This is not a good person'
+Task{13,2} = '1 = This is a good person\n2 = This is not a good person'
 Task{14,1} = 'How old were you when you first heard of this person?'; %episodic
 Task{14,2} = '1 = Ive known them for as long as I can remember\n2 = I was in my teenage years y/o\n3 = As an adult\n4 = Ive Never seen the person before';
 %Task{,} = 
@@ -173,6 +173,7 @@ Screen('BlendFunction', window, 'GL_SRC_ALPHA', 'GL_ONE_MINUS_SRC_ALPHA');
 %theImage = imread(theImageLocation);
 
 randTask = randperm(length(Task)); %this is where task vector is randomized
+ExpStart = GetSecs;
 %%  BLOCKS here
 % Beginning of a block, task instructions, fixation cross
 for expBlock = 1 : numBlocks
@@ -188,7 +189,8 @@ DrawFormattedText(window, taskName, 'center', 'center', white);
 % Task instructions
 Screen('TextSize', window, 24);
 Screen('TextFont', window, 'Courier');
-lower_third = screenYpixels / 3 * 2 + 50;
+%lower_third = screenYpixels / 3 * 2 + 50;
+lower_third = 600;
 cCenter = xCenter - length(taskIntruct);
 %DrawFormattedText(window, taskIntruct, 'center', lower_third, white); % %centers nicely - not justified
 DrawFormattedText(window, taskIntruct, cCenter, lower_third, white);
@@ -222,7 +224,6 @@ Screen('DrawLines', window, allCoords,lineWidthPix, white, [xCenter yCenter], 2)
 Screen('Flip', window);
 WaitSecs(t_fixCross); % Time that fixation cross is on the screen
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-ExpStart = GetSecs;
 %% EXPERIMENTAL RUN. 1 loop of code below = 1 trial
 
   % specify number of iterations
