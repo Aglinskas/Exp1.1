@@ -6,7 +6,7 @@ sca;
 
 %% Experiment Parameters
 subjID = input('input participant number ','s')
-numBlocks = 13; % how many blocks to run in experiment if 13 = all blocks will be presented in a random order, if less, a random subset of tasks will be selected
+numBlocks = 2; % how many blocks to run in experiment if 13 = all blocks will be presented in a random order, if less, a random subset of tasks will be selected
 numTrials = 3; % number of faces to be shown per block
 param_ISI = 1; % InterStimulusInterval: 1=Fixed ; 2 = Random between min and max values ; 3 optseq2 (not added yet)
     param_fixedISI = 0.1; % if fixed specify seconds     %default 2 seconds, for debugging 0.1s 
@@ -17,7 +17,7 @@ param_stimtimeFixed = 0.1;
     param_randStimTime_min = 1;
     param_randStimTime_max = 3;
 instruct_time = 7 %time in seconds that instructions are on the screen    
-t_fixCross = 0.1 % time that fixation cross is on the screen
+t_fixCross = 2 % time that fixation cross is on the screen
 %ISI = [zeros(numTrials,1)]; % this is where interstimulus intervals will be kept; we can randomly choose them every time, or decide them in advance based on opseq2; and feed them into myTrials(numTrials).ISI 
 % random ISI's
 %For ISI_counter = 1:numtrials
@@ -29,12 +29,12 @@ totalTrials = numTrials * numBlocks;
 Task{1,1} = 'What colour is the persons hair?'; %Control or baseline
 Task{1,2} = '1 = Blond\n2 = Dark\n3 = Other\n4 = Person has no hair';
 Task{2,1} = 'How old were you when you first heard of this person?'; %episodic
-Task{2,2} = '1 = less than 10 years old\n2 = between 10 and 15y/o\n3 = between 16 and now\n4 = never seen the person before';
+Task{2,2} = '1 = less than 7 years old\n2 = between 8 and 17y/o\n3 = between 18 and now\n4 = never seen the person before';
 Task{3,1} = 'How attractive do you find this person?';
 Task{3,2} = '1 = very attractive\n2 = attractive\n3= average\n4 = not really attractive';
-Task{4,1} = 'How friendly does this person look?';
+Task{4,1} = 'How friendly is this person?';
 Task{4,2} = '1 = very friendly\n2 = friendly\n3 = not really friendly\n4 = would not approach';
-Task{5,1} = 'How trustworthy does this person look?';
+Task{5,1} = 'How trustworthy is this person?';
 Task{5,2} = '1 = very\n2 = quite\n3 = not really\n4 = not at all';
 Task{6,1} = 'Do you associate this person more with positive or negative emotions?';
 Task{6,2} = '1 = Very postive\n2 = somewhat positive\n3 = somewhat negative\n4 = negative ';
@@ -50,8 +50,10 @@ Task{11,1} = 'Who is this person?'
 Task{11,2} = '1 = TV/Movie persona\n2 = Singer/Musician\n3 = Politian/Businessman\n4 = other/dont know'
 Task{12,1} = 'How familiar is this persons face to you?'
 Task{12,2} = '1 = would not confuse it with anyone else\n2= quit distinct\n3 = confusable\n4 = would easily confuse'
-Task{13,1} = 'Considering all the information available to you, is this a good person'
+Task{13,1} = 'Consider all the information available to you;\nAre they a good person?'
 Task{13,2} = '1 = this is a good person\n2 = this is not a good person'
+Task{14,1} = 'How old were you when you first heard of this person?'; %episodic
+Task{14,2} = '1 = Ive known them for as long as I can remember\n2 = I was in my teenage years y/o\n3 = as an adult\n4 = never seen the person before';
 %Task{,} = 
 %Task = Task'; 
 
@@ -64,7 +66,7 @@ Task{13,2} = '1 = this is a good person\n2 = this is not a good person'
 %Task{3,2} = '1 = very, 2 = not bad, 3= average, 4 = not really attractive';
 %Task{4,1} = 'How friendly does this person look?';
 %Task{4,2} = '1=friendly, 2=less friendly, 3=not really friendly, 4=would not approach';
-%Task{5,1} = 'How trustworthy does this person look?';
+%Task{5,1} = 'How trustworthy is this person?';
 %Task{5,2} = '1 = very, 2 = quite, 3 = not really, 4 = not at all';
 %Task{6,1} = 'Do you associate this person more with positive or negative emotions?';
 %Task{6,2} = '1 = Very postive, 2 = somewhat positive, 3 = somewhat negative, 4 = negative ';
@@ -84,7 +86,9 @@ end
 myTrials.filenames; %adds them to myTrials. later when pic is to be presented, it is taken from myTrials.
 %% Set up KbCheck and keyboard related things
 % CheetSheet: KeyCodes = 89, 90,91,92 correspond to some other numbers than 1,2,3,4 on keyboard. 40 is Enter/Return, 41 is escape
-enabledKeyes = [30;31;32;33;40;41];
+enabledKeyes = [30;31;32;33;44];
+responseKeyes = [30;31;32;33;44];
+spaceKey = [44];
 keyNames = KbName('KeyNames');
 RestrictKeysForKbCheck(enabledKeyes);
 %% Set up InterStimulusInterval
