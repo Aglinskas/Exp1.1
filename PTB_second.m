@@ -6,7 +6,7 @@ sca;
 
 %% Experiment Parameters
 subjID = input('input participant number ','s')
-numBlocks = 2; % how many blocks to run in experiment if 13 = all blocks will be presented in a random order, if less, a random subset of tasks will be selected
+numBlocks = 14; % how many blocks to run in experiment if 13 = all blocks will be presented in a random order, if less, a random subset of tasks will be selected
 numTrials = 3; % number of faces to be shown per block
 param_ISI = 1; % InterStimulusInterval: 1=Fixed ; 2 = Random between min and max values ; 3 optseq2 (not added yet)
     param_fixedISI = 0.1; % if fixed specify seconds     %default 2 seconds, for debugging 0.1s 
@@ -16,8 +16,9 @@ param_stimTime = 1; % time that a face is on-screen. stimus-on Time 1 = Fixed Ti
 param_stimtimeFixed = 0.1;
     param_randStimTime_min = 1;
     param_randStimTime_max = 3;
-instruct_time = 7 %time in seconds that instructions are on the screen    
-t_fixCross = 2 % time that fixation cross is on the screen
+instruct_param = 2 % 1=fixed instruction time, 2 = self paced (press space to continue)
+instruct_time = 7 %time in seconds that instructions are on the screen (if not self paced)  
+t_fixCross = 0.1 % time that fixation cross is on the screen
 %ISI = [zeros(numTrials,1)]; % this is where interstimulus intervals will be kept; we can randomly choose them every time, or decide them in advance based on opseq2; and feed them into myTrials(numTrials).ISI 
 % random ISI's
 %For ISI_counter = 1:numtrials
@@ -31,29 +32,29 @@ Task{1,2} = '1 = Blond\n2 = Dark\n3 = Other\n4 = Person has no hair';
 Task{2,1} = 'How old were you when you first heard of this person?'; %episodic
 Task{2,2} = '1 = less than 7 years old\n2 = between 8 and 17y/o\n3 = between 18 and now\n4 = never seen the person before';
 Task{3,1} = 'How attractive do you find this person?';
-Task{3,2} = '1 = very attractive\n2 = attractive\n3= average\n4 = not really attractive';
+Task{3,2} = '1 = very attractive\n2 = attractive\n3 = average\n4 = not really attractive';
 Task{4,1} = 'How friendly is this person?';
 Task{4,2} = '1 = very friendly\n2 = friendly\n3 = not really friendly\n4 = would not approach';
 Task{5,1} = 'How trustworthy is this person?';
 Task{5,2} = '1 = very\n2 = quite\n3 = not really\n4 = not at all';
 Task{6,1} = 'Do you associate this person more with positive or negative emotions?';
-Task{6,2} = '1 = Very postive\n2 = somewhat positive\n3 = somewhat negative\n4 = negative ';
+Task{6,2} = '1 = Very postive emotions\n2 = somewhat positive emotions\n3 = somewhat negative emotions\n4 = negative emotions';
 Task{7,1} = 'Have you seen this person before'; % semantic access 1
 Task{7,2} = '1 = Yes, I have\n2 = No, never seen them before';
 Task{8,1} = 'If asked to write an essay about this person\nhow much could you write about them?';%semantic access 2
 Task{8,2} = '1 = None\n2 = Sentence\n3 = Paragraph\n4 = Page';
 Task{9,1} = 'How common is this persons name?'
-Task{9,2} = '1 = Very common\n2 = not very common\n3 = First time hearing this name\n4 = I don-t know this persons name'
+Task{9,2} = '1 = Very common\n2 = Not very common\n3 = First time hearing this name\n4 = I dont know this persons name'
 Task{10,1} = 'How many facts can you remember about this person'
-Task{10,2} = '1 = five or more\n2 = two or three\n3 = just their name\n4 = dont know the person'
+Task{10,2} = '1 = Five or more\n2 = Two or three\n3 = Just their name\n4 = Dont know the person'
 Task{11,1} = 'Who is this person?'
 Task{11,2} = '1 = TV/Movie persona\n2 = Singer/Musician\n3 = Politian/Businessman\n4 = other/dont know'
-Task{12,1} = 'How familiar is this persons face to you?'
-Task{12,2} = '1 = would not confuse it with anyone else\n2= quit distinct\n3 = confusable\n4 = would easily confuse'
+Task{12,1} = 'How distinct / distinguishable is this persons face to you?'
+Task{12,2} = '1 = Would not confuse it with anyone else\n2 = Quite distinct\n3 = Confusable\n4 = Would easily confuse'
 Task{13,1} = 'Consider all the information available to you;\nAre they a good person?'
-Task{13,2} = '1 = this is a good person\n2 = this is not a good person'
+Task{13,2} = '1 = This is a good person\n 2 = This is not a good person'
 Task{14,1} = 'How old were you when you first heard of this person?'; %episodic
-Task{14,2} = '1 = Ive known them for as long as I can remember\n2 = I was in my teenage years y/o\n3 = as an adult\n4 = never seen the person before';
+Task{14,2} = '1 = Ive known them for as long as I can remember\n2 = I was in my teenage years y/o\n3 = As an adult\n4 = Ive Never seen the person before';
 %Task{,} = 
 %Task = Task'; 
 
@@ -187,7 +188,7 @@ DrawFormattedText(window, taskName, 'center', 'center', white);
 % Task instructions
 Screen('TextSize', window, 24);
 Screen('TextFont', window, 'Courier');
-lower_third = screenYpixels / 3 * 2;
+lower_third = screenYpixels / 3 * 2 + 50;
 cCenter = xCenter - length(taskIntruct);
 %DrawFormattedText(window, taskIntruct, 'center', lower_third, white); % %centers nicely - not justified
 DrawFormattedText(window, taskIntruct, cCenter, lower_third, white);
@@ -195,7 +196,13 @@ DrawFormattedText(window, taskIntruct, cCenter, lower_third, white);
 %xCenter
 %DrawFormattedText(window, 'What movies have they been in?', 'center', screenYpixels * 0.15, [1 0 0]);
 Screen('Flip', window);
-WaitSecs(instruct_time); % length of time that task and instructions are on the screen
+if instruct_param == 2
+ RestrictKeysForKbCheck(spaceKey); %waits for space
+ KbWait;
+ RestrictKeysForKbCheck(responseKeyes); % re-enabled response keyes
+else WaitSecs(instruct_time); % length of time that task and instructions are on the screen
+end
+
 fixCrossDimPix = 40;
 
 % Now we set the coordinates (these are all relative to zero we will let
@@ -239,9 +246,17 @@ end
 imageTexture = Screen('MakeTexture', window, theImage);
 
 % Draw the image to the screen, unless otherwise specified PTB will draw
-% the texture full size in the cente41232r of the screen. We first draw the
+% the texture full size in the of the screen. We first draw the
 % image in its correct orientation.
-Screen('DrawTexture', window, imageTexture, [], [], 0);
+%uCenter = yCenter - 50 % a bit upper than Center
+%Screen('DrawTexture', window, imageTexture, [], [], 0);% instruction in the xcenter and ycenter
+                                      %     [], [], 0); imgRect, centerRect(imgRect*2, rect)
+Screen('DrawTexture', window, imageTexture, [], [570 150 870 550],0); % only works on 1440 * 900 screen 
+%570 870 250 650
+%Screen('DrawTexture', window, imageTexture, [255 255 0], [255 255 0], 0);%
+lower_third = 600;
+DrawFormattedText(window, taskIntruct, cCenter, lower_third, white); % instructions below the image
+%DrawFormattedText(window, taskIntruct, 'left', cCenter, white, [],[],[],[],[],[600 600 840 700]); % instructions below the image
 
 % Flip to the screen
 Screen('Flip', window); % the image is now on the screen
@@ -270,6 +285,7 @@ ExpTrial = ExpTrial+1
 end
 end
 %writetable(struct2table(myTrials),strcat(num2str(subjID), '.csv')) % after all loops are finished. Save myTrials as csv
-save('myTrials','subjID');
+expName = strcat(subjID, {'_Results.mat'});
+save(expName{1,1},'myTrials');
 % Clear the screen
 sca;
